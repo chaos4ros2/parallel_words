@@ -32,20 +32,20 @@ export default props => {
     
   // console.log(JSON.stringify(dragState))
     return (
-        <div>
-            <table>
-                <thead>
+        <div className="">
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                     <tr ref={headsEl}>
                         {heads.map((x, i) => (
                             <th key={i}>{x}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody ref={rowsEl}>
+                <tbody ref={rowsEl} className="bg-white divide-y divide-gray-200">
                     {rows.map((x = [], i) => (
                         <tr key={i}>
                             {x.map((y, j) => (
-                                <td
+                                <td className="px-6 py-4 whitespace-nowrap"
                                     key={j}
                                     style={{
                                         border: "1px solid black",
