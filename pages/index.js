@@ -33,9 +33,6 @@ export default function Home({words}) {
 
   return (
     <div>
-      <Head>
-          <script src="https://cdn.tailwindcss.com"></script>  
-      </Head>
       <h1>react table drag column row</h1>
       <ReactTableDragColumnRow
         heads={data.heads}

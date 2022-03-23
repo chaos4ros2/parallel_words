@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import React from "react";
 
+
 // tell direction after drag start, the first dirction that reach 5px offset
 const DRAG_DIRECTION_NONE = "";
 const DRAG_DIRECTION_ROW = "row";
@@ -32,20 +33,20 @@ export default props => {
     
   // console.log(JSON.stringify(dragState))
     return (
-        <div className="">
-            <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+        <div>
+            <table>
+                <thead>
                     <tr ref={headsEl}>
                         {heads.map((x, i) => (
                             <th key={i}>{x}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody ref={rowsEl} className="bg-white divide-y divide-gray-200">
+                <tbody ref={rowsEl}>
                     {rows.map((x = [], i) => (
                         <tr key={i}>
                             {x.map((y, j) => (
-                                <td className="px-6 py-4 whitespace-nowrap"
+                                <td
                                     key={j}
                                     style={{
                                         border: "1px solid black",
