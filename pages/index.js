@@ -1,52 +1,64 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { requests } from "../requests/request";
+import { base_requests, requests } from "../requests/request";
 import ReactTableDragColumnRow from "../components/DraggableTable";
 import { useState } from "react";
 
 export async function getServerSideProps() {
-  // ランダムに単語を取得するAPI
-  const res = await fetch(requests.RandomWords.url);
-  const words = await res.json();
-
-  console.log(words);
-
-  return {
-    props: {
-      words,
+    // ランダムに単語を取得するAPI
+    const res = await fetch(base_requests.RandomWords.url);
+    const words = await res.json();
+    const words_list = [];
+    let column = 0;
+    // https://qiita.com/kerupani129/items/6bb14acb2213179156a2#32-array---arrayprototypeentries
+    for (const [index, word] of words.entries()) {
+      words_list[index] = [];
+      words_list[index][column] = word;
     }
-  }
+    column += 1;
+
+    const search_query = words.join(', ');
+
+    for (const country in requests) {
+      const res = await fetch(`${requests[country]['url']}&text=${search_query}`);
+      const words_string = await res.json();
+      const words = words_string.translations[0].text.split(/[,、，]/g);
+      for (const [index, word] of words.entries()) {
+        words_list[index][column] = word;
+      }
+      column++;
+    }
+
+    return {
+      props: {
+        words_list,
+      }
+    }
 }
 
-export default function Home({words}) {
-  let [data, setData] = useState({
-    heads: ['English', 'Germany'],
-    rows: [
-      [words[0], words[5]],
-      [words[1], words[6]],
-      [words[2], words[7]],
-      [words[3], words[8]],
-      [words[4], words[9]],
-    ]
-  });
+export default function Home({words_list}) {
+    let [data, setData] = useState({
+      heads: ['English', 'Japanese', 'Germany', 'Frech', 'Italian', 'Spanish', 'Chinese', 'Russian'],
+      rows: words_list,
+    });
 
-  return (
-    <div>
-      <h1>react table drag column row</h1>
-      <ReactTableDragColumnRow
-        heads={data.heads}
-        rows={data.rows}
-        onDragEnd={(type, from, to, newData) => {
-          console.log({
-            type,
-            from,
-            to,
-            newData
-          });
-          setData(newData);
-        }}
-      />
-    </div>
-  )
+    return (
+      <div>
+        <h1>react table drag column row</h1>
+        <ReactTableDragColumnRow
+          heads={data.heads}
+          rows={data.rows}
+          onDragEnd={(type, from, to, newData) => {
+            console.log({
+              type,
+              from,
+              to,
+              newData
+            });
+            setData(newData);
+          }}
+        />
+      </div>
+    )
 }
