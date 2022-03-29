@@ -7,7 +7,8 @@ import { useState } from "react";
 
 export async function getServerSideProps() {
     // ランダムに単語を取得するAPI
-    const res = await fetch(base_requests.RandomWords.url);
+    // base_requests.RandomWords.url => another api
+    const res = await fetch('http://localhost:3000/api/kikutan');  
     const words = await res.json();
     const words_list = [];
     let column = 0;

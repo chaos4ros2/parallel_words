@@ -1,0 +1,17 @@
+export const words = [
+    'cargo',
+    'comparison',
+    'machinery',
+    'occupation',
+    'satisfaction',
+    'acquisition',
+    'commodity',
+    'investor',
+    'shipping',
+    'advertisement',
+    'associate',
+    'emphasis',
+    'estate',
+    'exploration',
+    'exposure',
+]
