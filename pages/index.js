@@ -4,10 +4,14 @@ import styles from '../styles/Home.module.css'
 import { base_requests, requests } from "../requests/request";
 import ReactTableDragColumnRow from "../components/DraggableTable";
 import { useState } from "react";
+import { csv_2_json } from '../lib/csv'
 
 export async function getServerSideProps() {
     // ランダムに単語を取得するAPI
     // base_requests.RandomWords.url => another api
+    const test = await fetch('http://localhost:3000/csv/toeic.csv');
+    const csv = await test.text();
+    console.log(csv_2_json(csv));
     const res = await fetch('http://localhost:3000/api/kikutan');  
     const words = await res.json();
     const words_list = [];
